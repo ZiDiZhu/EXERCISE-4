@@ -86,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
       }
       //ADDED
       if($_GET["select-query"] =="three"){
-        $outArr[]= $days;
+        $outArr[]= $weather;
       }
 
       echo(json_encode($outArr));

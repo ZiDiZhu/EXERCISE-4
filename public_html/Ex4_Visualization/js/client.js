@@ -297,13 +297,14 @@ function displayAsDefault(resultSet){
 
 }//function
 
+//added
 function displayThree(resultSet){
   //reset
   dataPoints =[];
   let xPos = 0;
   let yPos =0;
-  const NUM_COLS =50;
-  const CELL_SIZE = 20;
+  const NUM_COLS =40;
+  const CELL_SIZE = 25;
   let coloredDays = {};
   /*
   1: get the array of days (last element in the result set  -- see runQueries.php)
@@ -311,8 +312,9 @@ function displayThree(resultSet){
   coloredDays object
   */
   let possibleDays = resultSet[resultSet.length-1];
-  let possibleColors = ['rgb(0, 0, 0)', 'rgb(255, 77, 136)','rgb(255, 51, 119)','rgb(255, 26, 102)','rgb(255, 0, 85)','rgb(255, 0, 85)','rgb(255, 0, 85)'];
-
+  let possibleColors = ['steelblue','aquamarine','royalblue','lavender','skyblue','white','lightgrey','lightblue'];
+  //steel=storm; aquamarine = rain; royalblue = sun;lavender=cloud
+  //skyblue=clear;white=snow; grey=grey;lightblue=fog
   for(let i = 0; i< possibleDays.length; i++){
     coloredDays[possibleDays[i]] = possibleColors[i];
   }
@@ -322,9 +324,9 @@ function displayThree(resultSet){
 3:  put into the dataPoints array.
 **/
 //set background of parent ... for fun ..
- document.getElementById("parent-wrapper").style.background = "rgba(255,0,0,.4)";
-  description.textContent = "DEfAULT CASE";
-  description.style.color = 'rgb(255, 0, 85)';
+ document.getElementById("parent-wrapper").style.background = "blue";
+  description.textContent = "COLOR OF THE SKY (BY WEATHER)";
+  description.style.color = 'WHITE';
 
 //last  element is the helper array...
   for(let i = 0; i<resultSet.length-1; i++){
@@ -337,7 +339,7 @@ function displayThree(resultSet){
       resultSet[i].event_affect_strength,
       resultSet[i].eID,
       //map to the day ...
-      coloredDays[resultSet[i].day],
+      coloredDays[resultSet[i].weather],
       //last parameter is where should this go...
       document.getElementById("childOne"),
       //which css style///
