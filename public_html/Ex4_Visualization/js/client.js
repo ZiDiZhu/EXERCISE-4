@@ -311,7 +311,7 @@ function displayThree(resultSet){
   coloredDays object
   */
   let possibleDays = resultSet[resultSet.length-1];
-  let possibleColors = ['rgb(255, 102, 153)', 'rgb(255, 77, 136)','rgb(255, 51, 119)','rgb(255, 26, 102)','rgb(255, 0, 85)','rgb(255, 0, 85)','rgb(255, 0, 85)'];
+  let possibleColors = ['rgb(0, 0, 0)', 'rgb(255, 77, 136)','rgb(255, 51, 119)','rgb(255, 26, 102)','rgb(255, 0, 85)','rgb(255, 0, 85)','rgb(255, 0, 85)'];
 
   for(let i = 0; i< possibleDays.length; i++){
     coloredDays[possibleDays[i]] = possibleColors[i];
@@ -341,7 +341,7 @@ function displayThree(resultSet){
       //last parameter is where should this go...
       document.getElementById("childOne"),
       //which css style///
-      "point"
+      "pointThree"
     ));
 /** this code is rather brittle - but does the job for now .. draw a grid of data points ..
 //*** drawing a grid ****/
