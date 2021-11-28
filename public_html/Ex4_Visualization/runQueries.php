@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
     if($_GET["select-query"]==="four"){
       //TO IMPLEMENT:
-        $selectedQuery = "";
+        $selectedQuery = "SELECT * FROM dataStuff,events WHERE dataStuff.eID = events.eventID ORDER BY weather";
       }
 
     if($_GET["select-query"]==="five"){
@@ -87,6 +87,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
       //ADDED
       if($_GET["select-query"] =="three"){
         $outArr[]= $weather;
+      }
+
+      if($_GET["select-query"] =="four"){
+        $outArr[]= $events;
       }
 
       echo(json_encode($outArr));

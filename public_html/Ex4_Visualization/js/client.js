@@ -64,7 +64,7 @@ querySelectDropDown.onchange = function() {
         break;
       }
       case "four":{
-        // TODO
+        displayByGroups(parsedJSON,"weather","eventName");
         break;
       }
 
@@ -312,8 +312,8 @@ function displayThree(resultSet){
   coloredDays object
   */
   let possibleDays = resultSet[resultSet.length-1];
-  let possibleColors = ['steelblue','aquamarine','royalblue','lavender','skyblue','white','lightgrey','lightblue'];
-  //steel=storm; aquamarine = rain; royalblue = sun;lavender=cloud
+  let possibleColors = ['steelblue','bisque','royalblue','lavender','skyblue','white','lightgrey','lightblue'];
+  //steel=storm; bisque = rain; royalblue = sun;lavender=cloud
   //skyblue=clear;white=snow; grey=grey;lightblue=fog
   for(let i = 0; i< possibleDays.length; i++){
     coloredDays[possibleDays[i]] = possibleColors[i];
@@ -362,6 +362,80 @@ function displayThree(resultSet){
   document.getElementById("childOne").style.height = `${yPos+CELL_SIZE}px`;
 
 }//function
+
+function displayFour(resultSet,propOne,propTwo){
+  dataPoints =[];
+  let finalHeight =0;
+  //order by WEATHER and Have the event names as the color  ....
+
+  //set background of parent ... for fun ..
+    document.getElementById("parent-wrapper").style.background = "rgba(51, 153, 102,1)";
+    description.textContent = "BY WEATHER AND ALSO HAVE EVENT NAMES {COLOR}";
+    description.style.color = "rgb(179, 230, 204)";
+
+    let coloredEvents = {}
+
+    //reget
+    let possibleEvents = resultSet[resultSet.length-1];
+    let possibleColors = ['rgb(198, 236, 217)','rgb(179, 230, 204)','rgb(159, 223, 190)','rgb(140, 217, 177)','rgb(121, 210, 164)','rgb(102, 204, 151)','rgb(83, 198, 138)','rgb(64, 191, 125)','rgb(255, 204, 179)','rgb(255, 170, 128)','rgb(255, 153, 102)','rgb(255, 136, 77)','rgb(255, 119, 51)','rgb(255, 102, 26)','rgb(255, 85, 0)','rgb(230, 77, 0)','rgb(204, 68, 0)'];
+
+    for(let i = 0; i< possibleColors.length; i++){
+      coloredEvents[possibleEvents[i]] = possibleColors[i];
+
+      }
+
+
+  let offsetX =-200;
+  let offsetY =150;
+  // find the weather of the first one ...
+  let currentGroup = resultSet[0][propOne];
+  let xPos =offsetX;
+  let yPos =offsetY;
+
+    for(let i = 0; i<resultSet.length-1; i++){
+      dataPoints.push(new myDataPoint(resultSet[i].dataId,
+        resultSet[i].day,
+        resultSet[i].weather,
+        resultSet[i].start_mood,
+        resultSet[i].after_mood,
+        resultSet[i].after_mood_strength,
+        resultSet[i].event_affect_strength,
+        resultSet[i].eID,
+        //map to the EVENT ...
+        coloredEvents[resultSet[i].eventName],
+        //last parameter is where should this go...
+        document.getElementById("childOne"),
+        //which css style///
+        "point_two"
+      ));
+      /** check if we have changed group ***/
+    if(resultSet[i][propOne] !== currentGroup){
+      //update
+      currentGroup=resultSet[i][propOne];
+      offsetX+=150;
+      offsetY=150;
+      xPos =offsetX;
+      yPos =offsetY;
+
+    }
+    //if not just keep on....
+    else
+    {
+      if(i%10 ===0){
+        xPos =offsetX;
+        yPos = yPos+15;
+      }
+
+      else{ xPos=xPos+15;}
+    } //end outer else
+
+      dataPoints[i].update(xPos,yPos);
+      finalHeight = yPos;
+    }//for
+
+document.getElementById("childOne").style.height = `${finalHeight+20}px`;
+
+} //function
 
 /***********************************************/
 });
