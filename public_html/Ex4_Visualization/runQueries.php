@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
     if($_GET["select-query"]==="three"){
       //TO IMPLEMENT:
-        $selectedQuery = "";
+        $selectedQuery = "SELECT * FROM dataStuff";
     }
 
     if($_GET["select-query"]==="four"){
@@ -83,6 +83,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
       // if it is the second query add on events at end of outArr
       if($_GET["select-query"] =="two"){
         $outArr[]= $events;
+      }
+      //ADDED
+      if($_GET["select-query"] =="three"){
+        $outArr[]= $days;
       }
 
       echo(json_encode($outArr));

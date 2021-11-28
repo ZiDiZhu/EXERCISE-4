@@ -60,6 +60,7 @@ querySelectDropDown.onchange = function() {
       ****/
       case "three":{
        // TODO
+        displayThree(parsedJSON);
         break;
       }
       case "four":{
@@ -239,7 +240,71 @@ function displayAsDefault(resultSet){
   let yPos =0;
   const NUM_COLS =50;
   const CELL_SIZE = 20;
-  let coloredDays = {}
+  let coloredDays = {};
+  /*
+  1: get the array of days (last element in the result set  -- see runQueries.php)
+  2: for each possible day (7)  - create a key value pair -> day: color and put in the
+  coloredDays object
+  */
+  let possibleDays = resultSet[resultSet.length-1];
+  let possibleColors = ['rgb(255, 102, 153)', 'rgb(255, 77, 136)','rgb(255, 51, 119)','rgb(255, 26, 102)','rgb(255, 0, 85)','rgb(255, 0, 85)','rgb(255, 0, 85)'];
+
+  for(let i = 0; i< possibleDays.length; i++){
+    coloredDays[possibleDays[i]] = possibleColors[i];
+  }
+/* for through each result  / not last as last is the days array and:
+1: create a new MyDataPoint object and pass the properties from the db result entry to the object constructor
+2: set the color using the coloredDays object associated with the resultSet[i].day
+3:  put into the dataPoints array.
+**/
+//set background of parent ... for fun ..
+ document.getElementById("parent-wrapper").style.background = "rgba(255,0,0,.4)";
+  description.textContent = "DEfAULT CASE";
+  description.style.color = 'rgb(255, 0, 85)';
+
+//last  element is the helper array...
+  for(let i = 0; i<resultSet.length-1; i++){
+    dataPoints.push(new myDataPoint(resultSet[i].dataId,
+      resultSet[i].day,
+      resultSet[i].weather,
+      resultSet[i].start_mood,
+      resultSet[i].after_mood,
+      resultSet[i].after_mood_strength,
+      resultSet[i].event_affect_strength,
+      resultSet[i].eID,
+      //map to the day ...
+      coloredDays[resultSet[i].day],
+      //last parameter is where should this go...
+      document.getElementById("childOne"),
+      //which css style///
+      "point"
+    ));
+/** this code is rather brittle - but does the job for now .. draw a grid of data points ..
+//*** drawing a grid ****/
+  if(i%NUM_COLS ===0){
+    //reset x and inc y (go to next row)
+    xPos =0;
+    yPos+=CELL_SIZE;
+  }
+  else{
+    //just move along in the column
+    xPos+=CELL_SIZE;
+  }
+  //update the position of the data point...
+  dataPoints[i].update(xPos,yPos);
+}//for
+  document.getElementById("childOne").style.height = `${yPos+CELL_SIZE}px`;
+
+}//function
+
+function displayThree(resultSet){
+  //reset
+  dataPoints =[];
+  let xPos = 0;
+  let yPos =0;
+  const NUM_COLS =50;
+  const CELL_SIZE = 20;
+  let coloredDays = {};
   /*
   1: get the array of days (last element in the result set  -- see runQueries.php)
   2: for each possible day (7)  - create a key value pair -> day: color and put in the
