@@ -64,7 +64,7 @@ querySelectDropDown.onchange = function() {
         break;
       }
       case "four":{
-        displayByGroups(parsedJSON,"weather","eventName");
+        displayFour(parsedJSON,"weather","eventName");
         break;
       }
 
@@ -377,7 +377,7 @@ function displayFour(resultSet,propOne,propTwo){
 
     //reget
     let possibleEvents = resultSet[resultSet.length-1];
-    let possibleColors = ['rgb(198, 236, 217)','rgb(179, 230, 204)','rgb(159, 223, 190)','rgb(140, 217, 177)','rgb(121, 210, 164)','rgb(102, 204, 151)','rgb(83, 198, 138)','rgb(64, 191, 125)','rgb(255, 204, 179)','rgb(255, 170, 128)','rgb(255, 153, 102)','rgb(255, 136, 77)','rgb(255, 119, 51)','rgb(255, 102, 26)','rgb(255, 85, 0)','rgb(230, 77, 0)','rgb(204, 68, 0)'];
+    let possibleColors = ['green','blue','purple','violet','bisque','pink','maroon','hotpink','pink','red','orange','gray','darkgray','gold','lightpink','lime','khaki'];
 
     for(let i = 0; i< possibleColors.length; i++){
       coloredEvents[possibleEvents[i]] = possibleColors[i];
