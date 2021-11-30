@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
     if($_GET["select-query"]==="five"){
       //TO IMPLEMENT:
-      $selectedQuery = "";
+      $selectedQuery = "SELECT * FROM dataStuff ORDER BY after_mood";
     }
 
     else if($_GET["select-query"]==="six"){
@@ -90,6 +90,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
       }
 
       if($_GET["select-query"] =="four"){
+        $outArr[]= $moods;
+      }
+
+      if($_GET["select-query"] =="five"){
         $outArr[]= $moods;
       }
 

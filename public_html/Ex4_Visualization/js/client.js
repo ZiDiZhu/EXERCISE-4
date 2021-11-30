@@ -69,7 +69,7 @@ querySelectDropDown.onchange = function() {
       }
 
       case "five":{
-        // TODO
+        displayFive(parsedJSON);
         break;
       }
       case "six":{
@@ -452,6 +452,70 @@ function displayFour(resultSet,propOne){
 document.getElementById("childOne").style.height = `${finalHeight+60}px`;
 
 } //function
+
+function displayFive(resultSet){
+  //reset
+  dataPoints =[];
+  let xPos = 0;
+  let yPos= 0;
+  //for circle drawing
+  let angle = 0;
+  let centerX = 400;
+  let centerY = 350;
+
+  let scalar= 200;
+  let yHeight = Math.cos(angle)*scalar+centerY;
+
+
+  let coloredMoods = {}
+
+  let possibleMoods = resultSet[resultSet.length-1];
+  let possibleColors = ['turquoise','gold','purple','yellow', 'royalblue','blue','orange','royalblue','red','lime'];
+
+  for(let i = 0; i< possibleMoods.length; i++){
+    coloredMoods[possibleMoods[i]] = possibleColors[i];
+
+    }
+
+    //set background of parent ... for fun ..
+      document.getElementById("parent-wrapper").style.background = "black";
+      description.textContent = "BY AFTER MOOD";
+      description.style.color = 'rgba(0, 64, 255,.5)';
+
+
+
+      for(let i = 0; i<resultSet.length-1; i++){
+        dataPoints.push(new myDataPoint(resultSet[i].dataId,
+          resultSet[i].day,
+          resultSet[i].weather,
+          resultSet[i].start_mood,
+          resultSet[i].after_mood,
+          resultSet[i].after_mood_strength,
+          resultSet[i].event_affect_strength,
+          resultSet[i].eID,
+          //map to the day ...
+          coloredMoods[resultSet[i].after_mood],
+          //last parameter is where should this go...
+          document.getElementById("childOne"),
+          //which css style///
+          "pointFive"
+        ));
+/*** circle drawing ***/
+xPos = Math.sin(angle)*scalar+centerX;
+yPos = Math.cos(angle)*scalar+centerY;
+angle +=0.12;
+
+if (angle > 2*Math.PI){
+angle =0;
+scalar-=20;
+centerX-=10;
+centerY-=10;
+}
+ dataPoints[i].update(xPos,yPos);
+}//for
+
+  document.getElementById("childOne").style.height = `${yHeight}px`;
+}//function
 
 /***********************************************/
 });
