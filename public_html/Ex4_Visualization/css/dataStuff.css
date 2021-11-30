@@ -76,6 +76,8 @@ margin-top:20px;
   height:20px;
   border-radius: 0px; /*ROUNDNESS*/
   position:absolute;
+  animation-name: animFive;
+  animation-duration: 1s;
 }
 
 .pointFour{
@@ -84,6 +86,13 @@ margin-top:20px;
   height:12px;
   border-radius: 5px;
   position:absolute;
+  animation-name: animFive;
+  animation-duration: 3s;
+}
+
+@keyframes animFive {
+  from{width: 1px;}
+  to{width: 12px;}
 }
 
 .pointFive{
@@ -92,6 +101,8 @@ margin-top:20px;
   height:12px;
   border-radius: 15px;
   position:absolute;
+  animation-name: animFive;
+  animation-duration: 5s;
 }
 
 /* for dropDown*/
