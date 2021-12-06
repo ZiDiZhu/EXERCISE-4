@@ -73,7 +73,7 @@ querySelectDropDown.onchange = function() {
         break;
       }
       case "six":{
-        // TODO
+        displaySix(parsedJSON);
         break;
       }
       default:{
@@ -314,7 +314,7 @@ function displayThree(resultSet){
     coloredDays[possibleDays[i]] = possibleColors[i];
   }
  document.getElementById("parent-wrapper").style.background = "blue";
-  description.textContent = "COLOR OF THE SKY (BY WEATHER)";
+  description.textContent = "COLOR OF THE SKY (WEATHER) \n ORDERED BY DAY";
   description.style.color = 'WHITE';
 
 //last  element is the helper array...
@@ -479,7 +479,7 @@ function displayFive(resultSet){
 
     //set background of parent ... for fun ..
       document.getElementById("parent-wrapper").style.background = "black";
-      description.textContent = "BY AFTER MOOD";
+      description.textContent = "AFTER MOOD";
       description.style.color = 'rgba(0, 64, 255,.5)';
 
 
@@ -515,6 +515,70 @@ centerY-=10;
 }//for
 
   document.getElementById("childOne").style.height = `${yHeight}px`;
+}//function
+
+function displaySix(resultSet){
+  //reset
+  dataPoints =[];
+  let xPos = 0;
+  let yPos =0;
+  const NUM_COLS =60;
+  const CELL_SIZE = 20;
+  let coloredDays = {};
+  /*
+  1: get the array of days (last element in the result set  -- see runQueries.php)
+  2: for each possible day (7)  - create a key value pair -> day: color and put in the
+  coloredDays object
+  */
+  let possibleDays = resultSet[resultSet.length-1];
+  let possibleColors = ['rgb(198, 236, 217)','rgb(179, 230, 204)','rgb(159, 223, 190)','rgb(140, 217, 177)','rgb(121, 210, 164)','rgb(102, 204, 151)','rgb(83, 198, 138)','rgb(64, 191, 125)','rgb(255, 204, 179)','rgb(255, 170, 128)','rgb(255, 153, 102)','rgb(255, 136, 77)','rgb(255, 119, 51)','rgb(255, 102, 26)','rgb(255, 85, 0)','rgb(230, 77, 0)','rgb(204, 68, 0)'];
+
+  for(let i = 0; i< possibleDays.length; i++){
+      coloredDays[possibleDays[i]]= possibleColors[i];
+  }
+/* for through each result  / not last as last is the days array and:
+1: create a new MyDataPoint object and pass the properties from the db result entry to the object constructor
+2: set the color using the coloredDays object associated with the resultSet[i].day
+3:  put into the dataPoints array.
+**/
+//set background of parent ... for fun ..
+ document.getElementById("parent-wrapper").style.background = "indigo";
+  description.textContent = "ORDERED BY EVENT EFFECT STRENGTH (weak to strong), COLOR=EVENTNAME";
+  description.style.color = 'white';
+
+//last  element is the helper array...
+  for(let i = 0; i<resultSet.length-1; i++){
+    dataPoints.push(new myDataPoint(resultSet[i].dataId,
+      resultSet[i].day,
+      resultSet[i].weather,
+      resultSet[i].start_mood,
+      resultSet[i].after_mood,
+      resultSet[i].after_mood_strength,
+      resultSet[i].event_affect_strength,
+      resultSet[i].eID,
+      //map to the day ...
+      coloredDays[resultSet[i].eventName],
+      //last parameter is where should this go...
+      document.getElementById("childOne"),
+      //which css style///
+      "pointSix"
+    ));
+/** this code is rather brittle - but does the job for now .. draw a grid of data points ..
+//*** drawing a grid ****/
+  if(i%NUM_COLS ===0){
+    //reset x and inc y (go to next row)
+    xPos =0;
+    yPos+=CELL_SIZE;
+  }
+  else{
+    //just move along in the column
+    xPos+=CELL_SIZE;
+  }
+  //update the position of the data point...
+  dataPoints[i].update(xPos,yPos);
+}//for
+  document.getElementById("childOne").style.height = `${yPos+CELL_SIZE}px`;
+
 }//function
 
 /***********************************************/

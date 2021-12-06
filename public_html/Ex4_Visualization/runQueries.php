@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
     if($_GET["select-query"]==="three"){
       //TO IMPLEMENT:
-        $selectedQuery = "SELECT * FROM dataStuff";
+        $selectedQuery = "SELECT * FROM dataStuff ORDER BY start_mood";
     }
 
     if($_GET["select-query"]==="four"){
@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
     else if($_GET["select-query"]==="six"){
       //TO IMPLEMENT:
-      $selectedQuery = "";
+      $selectedQuery = "SELECT * FROM dataStuff,events WHERE dataStuff.eID = events.eventID ORDER BY event_affect_strength";
   }
 
   if($selectedQuery!==""){
@@ -95,6 +95,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET["select-query"]))
 
       if($_GET["select-query"] =="five"){
         $outArr[]= $moods;
+      }
+
+      if($_GET["select-query"] =="six"){
+        $outArr[]= $events;
       }
 
       echo(json_encode($outArr));
